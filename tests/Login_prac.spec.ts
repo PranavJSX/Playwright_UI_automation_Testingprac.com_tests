@@ -60,7 +60,7 @@ test('Dynamic modal',async({page})=>{
     await page.addLocatorHandler(page.locator('.modal-content'),handler);
 })
 
-test.only('Handling page uploads',async({page})=>{
+test('Handling page uploads',async({page})=>{
     await page.goto('https://practice.expandtesting.com/upload');
     
     const fileChooserPromise =  page.waitForEvent('filechooser')
