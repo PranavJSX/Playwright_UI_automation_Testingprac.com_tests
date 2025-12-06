@@ -22,14 +22,16 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [['html'],['monocart-reporter', {  
-            name: "My Test Report",
-            outputFile: './monocart-report/index.html'
-        }]],
+  reporter: [['html'],
+        //     ['monocart-reporter', {  
+        //     name: "My Test Report",
+        //     outputFile: './monocart-report/index.html'
+        // }]
+      ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: 'http://127.0.0.1:3000',
+    baseURL: 'https://practice.expandtesting.com/',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -40,11 +42,10 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
-    // {
-    //   name:'setup',
-    //   testDir:'./Auth',
-    //   testMatch:'auth.setup.ts'
-    // },
+    {
+      name:'setup',
+      testMatch:'./helper/Login_process_helper.ts'
+    },
     // {
     //   name: 'chromium',
     //   use: { ...devices['Desktop Chrome'],storageState:'./Auth/authFile.json' },
@@ -74,8 +75,8 @@ export default defineConfig({
     /* Test against branded browsers. */
     {
       name: 'Microsoft Edge',
-      use: { ...devices['Desktop Edge'], channel: 'msedge' },
-      dependencies:[]
+      use: { ...devices['Desktop Edge'], channel: 'msedge'
+      },
     },
     // {
     //   name: 'Google Chrome',

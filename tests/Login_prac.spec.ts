@@ -6,7 +6,7 @@ require('dotenv').config();
 let adminEmail = process.env.ADMIN_USERNAME||'';
 let adminPassword = process.env.ADMIN_PASSWORD||'';
 
-test('Succesfull Login',async({page})=>{
+test.only('Succesfull Login',async({page})=>{
     const pages =  new PageFactor(page);
     await pages.getLoginPage().navigate_to_page();
     await pages.getLoginPage().login(adminEmail,adminPassword);
@@ -15,6 +15,7 @@ test('Succesfull Login',async({page})=>{
     console.log(welcomeText);
     expect(welcomeText).toBe('Hi, practice!');
     console.log(welcomeText);
+    await page.context().storageState({path:'.auth/user.json'});
 })
 
 
