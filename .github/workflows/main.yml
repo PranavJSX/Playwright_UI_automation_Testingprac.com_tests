@@ -1,8 +1,11 @@
-name: Deploy to GitHub Pages
+name: Playwright Tests
 
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -10,37 +13,34 @@ permissions:
   id-token: write
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Build project
-        run: npm run build
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
 
-      - name: Upload build output
-        uses: actions/upload-pages-artifact@v2
+      - name: Run Playwright Tests
+        run: npx playwright test
+
+      # Upload the monocart report folder
+      - name: Upload Monocart Report Artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: dist # change if your build folder is different
+          path: monocart-report
 
   deploy:
-    needs: build
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    needs: test
     steps:
-      - name: Deploy
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
