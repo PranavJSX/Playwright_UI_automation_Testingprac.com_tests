@@ -1,3 +1,4 @@
+// import { chromium } from 'playwright';
 import {test,expect} from '../fixtures/navigation_fixture';
 
 test('Radio button test',async({nav_page})=>{
@@ -45,10 +46,19 @@ test.skip('Horizontal slider',async({nav_page})=>{
 });
 
 
-test.only('Storage state setup',async({browser})=>{
+test('Storage state setup',async({browser})=>{
     const context = await browser.newContext({storageState:'./.auth/user.json'});
     const page = await context.newPage();
     await page.goto('https://practice.expandtesting.com/secure');
     await page.screenshot();
 
+});
+
+test('Dialogs',async({page})=>{
+    await page.goto('https://practice.expandtesting.com/js-dialogs');
+
+    await page.locator('#js-prompt').click();
+    await page.on('dialog',async(el)=>{
+        await el.accept('Pranav');
+    })
 });
