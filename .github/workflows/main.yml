@@ -31,7 +31,6 @@ jobs:
       - name: Run Playwright Tests (HTML + Monocart)
         run: npx playwright test
 
-      # This uploads monocart-report folder as the Pages artifact
       - name: Upload Monocart Report Artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -40,6 +39,13 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: test
+
+    # 🔥 REQUIRED FOR GITHUB PAGES TO WORK 🔥
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
