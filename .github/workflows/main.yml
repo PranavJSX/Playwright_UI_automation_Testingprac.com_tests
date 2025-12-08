@@ -17,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -33,11 +34,13 @@ jobs:
       - name: Upload Monocart Report Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: monocart-report
+          path: monocart-report # MUST contain index.html
 
   deploy:
     runs-on: ubuntu-latest
     needs: test
     steps:
+      - uses: actions/checkout@v4 # REQUIRED
+
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
