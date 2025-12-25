@@ -1,15 +1,16 @@
-import {test as base,Page} from '@playwright/test';
+import {Page} from '@playwright/test';
+// import type { Fixtures } from '@playwright/test';
 
-type Url_nav = {
-    nav_page:Page,
-};
+// type Url_nav = {
+//     nav_page:Page;
+// };
 
-export const test = base.extend<Url_nav>({
-    nav_page:async({page},use)=>{
+export const nav_page = {
+    nav_page:async({page}:{page:Page},use:(p:Page)=>Promise<void>)=>{
         await page.goto('/');
-        await use(page)
-    },
-});
+        await use(page);
+    }
+}
 
-export {expect} from '@playwright/test';
+// export {expect} from '@playwright/test';
 
