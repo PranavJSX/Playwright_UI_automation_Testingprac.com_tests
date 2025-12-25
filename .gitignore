@@ -1,9 +1,14 @@
 
 # Playwright
 node_modules/
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
-/Old_node_modules
-/.github
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+Old_node_modules
+.github
+monocart-report
+allure-results
+node_modules
+Old_node_modules
+playwright-report
