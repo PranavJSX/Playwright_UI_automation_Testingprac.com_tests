@@ -16,33 +16,20 @@ test('Radio button test',async({nav_page})=>{
 
 test.skip('Horizontal slider',async({nav_page})=>{
 
-    const handler = async() =>{
-        console.log('Add popup appeared');
-    }
+    await nav_page.waitForLoadState();
+     let myslider =await nav_page.locator('(//div[@class = "sliderContainer"]/input)[1]');
 
-    await nav_page.locator('//a[text()="Horizontal Slider"]').click();
-
-    await nav_page.addLocatorHandler(nav_page.locator('#card'),handler);
-
-    await nav_page.pause();
-
-    // let myslider = nav_page.locator('(//div[@class = "sliderContainer"]/input)[1]');
-    // await nav_page.waitForLoadState();
-    // if(!myslider){
-    //     nav_page.goBack();
-    //     await nav_page.locator('//a[text()="Horizontal Slider"]').click();
-    // }
     // myslider = nav_page.locator('//div[@class = "sliderContainer"]/input');
-    // const sliderWidth = await myslider.evaluate(el=>{
-    //     return el.getBoundingClientRect().width
-    // })
+    const sliderWidth = await myslider.evaluate(el=>{
+        return el.getBoundingClientRect().width
+    })
 
-    // await myslider.hover({force:true,position:{x:0,y:0}});
-    // await nav_page.mouse.down();
-    // await myslider.hover({force:true,position:{x:sliderWidth/2,y:0}});
-    // await nav_page.mouse.up();
-    // const rangeValue = await nav_page.locator('#range').innerText();
-    // expect(rangeValue).toBe('2.5');
+    await myslider.hover({force:true,position:{x:0,y:0}});
+    await nav_page.mouse.down();
+    await myslider.hover({force:true,position:{x:sliderWidth/2,y:0}});
+    await nav_page.mouse.up();
+    const rangeValue = await nav_page.locator('#range').innerText();
+    expect(rangeValue).toBe('2.5');
 });
 
 

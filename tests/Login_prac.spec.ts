@@ -52,13 +52,13 @@ test('Dynamic loader',async({page})=>{
 
 test('Dynamic modal',async({page})=>{
     await page.goto('https://practice.expandtesting.com/entry-ad');
-    
-    const handler = async() =>{
-        console.log('Dyanamic locator handler called');
+    //Way to resolve the dyanamic modal without using addlocatorhandler
+    await expect(async()=>{
         await page.getByRole('button',{name:'Close'}).click();
-    }
-
-    await page.addLocatorHandler(page.locator('.modal-content'),handler);
+        await expect(page.locator('#exampleModalLabel')).toBeHidden();
+    }).toPass();
+    console.log('Modal closed succuesfully');
+    expect(await page.locator('h1').textContent()).toBe('Entry Ad page for Automation Testing Practice');
 })
 
 test.skip('Handling page uploads',async({page})=>{
